@@ -1,0 +1,30 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest 
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: ls
+    - uses: azure/docker-login@v1
+      with:
+        login-server: neoleukin.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    - run: |
+         docker build  -f docker/Dockerfile -t neoleukin.azurecr.io/alphafold:${{ github.sha }} .
+         docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:main-latest
+         docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:latest
+         docker push neoleukin.azurecr.io/alphafold:${{ github.sha }}
+         docker push neoleukin.azurecr.io/alphafold:main-latest
+         docker push neoleukin.azurecr.io/alphafold:latest
