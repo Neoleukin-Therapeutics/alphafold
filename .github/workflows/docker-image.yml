@@ -12,6 +12,9 @@ jobs:
 
     runs-on: ubuntu-latest 
     steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+    
     - uses: azure/docker-login@v1
       with:
         login-server: neoleukin.azurecr.io
@@ -19,10 +22,9 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - run: |
-        ls
-#        docker build  -f docker/Dockerfile -t neoleukin.azurecr.io/alphafold:${{ github.sha }} .
- #       docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:main-latest
-  #      docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:latest
-  #      docker push neoleukin.azurecr.io/alphafold:${{ github.sha }}
-  #    docker push neoleukin.azurecr.io/alphafold:main-latest
-  #      docker push neoleukin.azurecr.io/alphafold:latest
+         docker build  -f docker/Dockerfile -t neoleukin.azurecr.io/alphafold:${{ github.sha }} .
+         docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:main-latest
+         docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:latest
+         docker push neoleukin.azurecr.io/alphafold:${{ github.sha }}
+         docker push neoleukin.azurecr.io/alphafold:main-latest
+         docker push neoleukin.azurecr.io/alphafold:latest
