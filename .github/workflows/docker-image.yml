@@ -19,7 +19,6 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - run: |
-        pwd
         ls
 #        docker build  -f docker/Dockerfile -t neoleukin.azurecr.io/alphafold:${{ github.sha }} .
  #       docker tag neoleukin.azurecr.io/alphafold:${{ github.sha }} neoleukin.azurecr.io/alphafold:main-latest
